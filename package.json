@@ -4,8 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run server",
-    "server":
+    "start": "npm run server:tsc:watch",
+    "test": "npm run server:test",
+    "server:test": "jest --config=./server/jest.json",
+    "server:test:coverage":
+      "jest --config=./server/jest.json --coverage --coverageDirectory=coverage",
+    "server:test:watch": "jest --watch --config=./server/jest.json",
+    "server:tsc:watch":
       "tsc-watch --outDir ./server/dist  --onSuccess \"node ./server/dist/index.js\" -p ./server/tsconfig.json"
   },
   "keywords": [],
@@ -19,7 +24,10 @@
     "rxjs": "^5.5.7"
   },
   "devDependencies": {
+    "@types/jest": "^22.2.0",
     "@types/node": "^9.4.7",
+    "jest": "^22.4.2",
+    "ts-jest": "^22.4.1",
     "tsc-watch": "^1.0.17",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.10.0",
