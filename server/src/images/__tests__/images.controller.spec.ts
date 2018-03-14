@@ -1,23 +1,23 @@
 import { Test } from '@nestjs/testing'
-import { AppController } from '../app.controller'
+import { ImagesController } from '../images.controller'
 
 describe('CatsController', () => {
-  let appController: AppController
+  let imagesController: ImagesController
 
   beforeEach(async () => {
     const module = await Test.createTestingModule({
-      controllers: [AppController],
+      controllers: [ImagesController],
       components: []
     }).compile()
 
-    appController = module.get<AppController>(AppController)
+    imagesController = module.get<ImagesController>(ImagesController)
   })
 
   describe('findAll', () => {
     it('should return an array of cats', async () => {
       const result = 'Hello World!'
 
-      expect(appController.root()).toBe(result)
+      expect(imagesController.root()).toBe(result)
     })
   })
 })

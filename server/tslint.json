@@ -12,11 +12,12 @@
     "member-ordering": [false],
     "curly": false,
     "interface-name": [true],
-    "array-type": [true],
+    "array-type": [true, "array"],
     "object-literal-sort-keys": false,
     "no-unused-expression": false,
     "max-classes-per-file": [false],
-    "semicolon": [true, "never"]
+    "semicolon": [true, "never"],
+    "no-namespace": [false]
   },
   "rulesDirectory": []
 }

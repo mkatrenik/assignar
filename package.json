@@ -7,11 +7,9 @@
     "start": "npm run server:tsc:watch",
     "test": "npm run server:test",
     "server:test": "jest --config=./server/jest.json",
-    "server:test:coverage":
-      "jest --config=./server/jest.json --coverage --coverageDirectory=coverage",
+    "server:test:coverage": "jest --config=./server/jest.json --coverage --coverageDirectory=coverage",
     "server:test:watch": "jest --watch --config=./server/jest.json",
-    "server:tsc:watch":
-      "tsc-watch --outDir ./server/dist  --onSuccess \"node ./server/dist/index.js\" -p ./server/tsconfig.json"
+    "server:tsc:watch": "tsc-watch --outDir ./server/dist  --onSuccess \"node ./server/dist/index.js\" -p ./server/tsconfig.json"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +18,7 @@
     "@nestjs/common": "^4.6.6",
     "@nestjs/core": "^4.6.6",
     "@nestjs/testing": "^4.6.6",
+    "axios": "^0.18.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^5.5.7"
   },
