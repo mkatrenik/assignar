@@ -1,5 +1,3 @@
-// import { Cat } from './cat.entity';
-
 import axios from 'axios'
 
 const IMGUR_CLIENT_ID = 'e19091a8f355573'

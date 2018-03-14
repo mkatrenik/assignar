@@ -52,4 +52,28 @@ describe('ImagesController', () => {
       spy.mockClear()
     })
   })
+
+  describe('upload', () => {
+    it('should upload file', async () => {
+      const file: Express.Multer.File = {
+        buffer: new Buffer('foo'),
+        fieldname: '',
+        originalname: '',
+        encoding: '',
+        mimetype: '',
+        size: 0,
+        destination: '',
+        filename: '',
+        path: ''
+      }
+
+      const spy = jest.spyOn(axios, 'post').mockImplementation(() => ({
+        data: {}
+      }))
+
+      imagesController.upload(file)
+      expect(spy).toBeCalledWith('/image', { image: 'Zm9v', type: 'base64' })
+      spy.mockClear()
+    })
+  })
 })

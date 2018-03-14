@@ -6,7 +6,7 @@
 /* tslint:disable */
 declare namespace ImgurRestApi {
   interface Response<T> {
-    data: T[] | Error
+    data: T
     status: number
     success: boolean
   }
