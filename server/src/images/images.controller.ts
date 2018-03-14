@@ -2,6 +2,7 @@ import {
   Get,
   Controller,
   Query,
+  Body,
   Post,
   UseInterceptors,
   FileInterceptor,
@@ -9,6 +10,7 @@ import {
 } from '@nestjs/common'
 import { ImageService } from './images.service'
 import { GetGalleryOptions } from './dto/get-gallery-options'
+import { CreateImagePayload } from './dto/create-image-payload'
 
 @Controller('/api/v1/images')
 export class ImagesController {
@@ -21,7 +23,10 @@ export class ImagesController {
 
   @Post()
   @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 20000 } }))
-  async upload(@UploadedFile() file: Express.Multer.File) {
-    return this.imageService.uploadImage(file.buffer)
+  async upload(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() payload: CreateImagePayload
+  ) {
+    return this.imageService.uploadImage({ buffer: file.buffer, ...payload })
   }
 }

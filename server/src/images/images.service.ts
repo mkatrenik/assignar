@@ -1,13 +1,18 @@
 import { Component, Inject } from '@nestjs/common'
 import axios, { AxiosStatic } from 'axios'
-import { TGalleryResponse, TImageUploadResponse } from './interfaces/api'
+import {
+  TGalleryResponse,
+  TImageUploadResponse,
+  TUploadPayloadArgs
+} from './interfaces/api'
 import { GetGalleryOptions } from './dto/get-gallery-options'
-import * as fs from 'fs'
+import { CreateImagePayload } from './dto/create-image-payload'
 
 @Component()
 export class ImageService {
   constructor(
-    @Inject('ImgurRestApiClient') private readonly apiClient: AxiosStatic
+    @Inject('ImgurRestApiClient') private readonly apiClient: AxiosStatic,
+    @Inject('ImgurDefaultAlbumDeleteHash') private readonly album: string
   ) {}
 
   async fetchSubredditGallery({
@@ -23,10 +28,13 @@ export class ImageService {
     return resp.data.data
   }
 
-  async uploadImage(buffer: Buffer) {
+  async uploadImage(args: TUploadPayloadArgs) {
+    const { buffer, ...options } = args
     const resp = await this.apiClient.post<TImageUploadResponse>(`/image`, {
       image: buffer.toString('base64'),
-      type: 'base64'
+      type: 'base64',
+      album: this.album,
+      ...options
     })
     return resp.data.data
   }

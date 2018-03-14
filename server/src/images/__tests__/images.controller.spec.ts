@@ -1,9 +1,10 @@
 import { Test } from '@nestjs/testing'
 import { ImagesController } from '../images.controller'
 import { ImageService } from '../images.service'
-import { imagesProviders } from '../images.providers'
+import { imagesProviders, DEFAULT_ALBUM_DELETE_HASH } from '../images.providers'
 import { GetGalleryOptions } from '../dto/get-gallery-options'
 import axios from 'axios'
+import { CreateImagePayload } from '../dto/create-image-payload'
 
 const galleryMockResponse = require('./gallery-subreddit-mock.json')
 
@@ -67,12 +68,23 @@ describe('ImagesController', () => {
         path: ''
       }
 
+      const payload: CreateImagePayload = {
+        description: 'desc',
+        name: 'name',
+        title: 'title'
+      }
+
       const spy = jest.spyOn(axios, 'post').mockImplementation(() => ({
         data: {}
       }))
 
-      imagesController.upload(file)
-      expect(spy).toBeCalledWith('/image', { image: 'Zm9v', type: 'base64' })
+      imagesController.upload(file, payload)
+      expect(spy).toBeCalledWith('/image', {
+        image: file.buffer.toString('base64'),
+        album: DEFAULT_ALBUM_DELETE_HASH,
+        type: 'base64',
+        ...payload
+      })
       spy.mockClear()
     })
   })

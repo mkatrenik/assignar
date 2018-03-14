@@ -1,11 +1,4 @@
-import {
-  IsString,
-  IsInt,
-  IsEnum,
-  IsIn,
-  IsNumber,
-  IsPositive
-} from 'class-validator'
+import { IsString, IsInt, IsEnum, IsPositive } from 'class-validator'
 import { Type } from 'class-transformer'
 
 enum Sort {

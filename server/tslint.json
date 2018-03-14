@@ -18,7 +18,8 @@
     "max-classes-per-file": [false],
     "semicolon": [true, "never"],
     "no-namespace": [false],
-    "no-var-requires": [false]
+    "no-var-requires": [false],
+    "no-unused-variable": true
   },
   "rulesDirectory": []
 }
