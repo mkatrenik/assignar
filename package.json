@@ -1,0 +1,32 @@
+{
+  "name": "assignar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run server",
+    "server":
+      "tsc-watch --outDir ./server/dist  --onSuccess \"node ./server/dist/index.js\" -p ./server/tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^4.6.6",
+    "@nestjs/core": "^4.6.6",
+    "@nestjs/testing": "^4.6.6",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^5.5.7"
+  },
+  "devDependencies": {
+    "@types/node": "^9.4.7",
+    "tsc-watch": "^1.0.17",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.10.0",
+    "typescript": "^2.7.2"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  }
+}
