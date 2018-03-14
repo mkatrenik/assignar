@@ -9,16 +9,16 @@ import {
 import { Type } from 'class-transformer'
 
 enum Sort {
-  time,
-  top
+  time = 'time',
+  top = 'top'
 }
 
 enum Window {
-  day,
-  week,
-  month,
-  year,
-  all
+  day = 'day',
+  week = 'week',
+  month = 'month',
+  year = 'year',
+  all = 'all'
 }
 
 export class GetGalleryOptions {
