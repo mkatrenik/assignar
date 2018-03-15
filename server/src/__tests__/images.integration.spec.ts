@@ -60,6 +60,37 @@ describe('Images', () => {
     })
   })
 
+  describe(`POST /api/v1/images`, () => {
+    it(`should upload image`, async () => {
+      const spy = jest
+        .spyOn(axios, 'post')
+        .mockImplementation(() => ({ data: {} }))
+
+      await request(server)
+        .post('/api/v1/images')
+        .attach('image', `${__dirname}/fotolia.jpg`)
+        .expect(201)
+
+      spy.mockClear()
+    })
+
+    it(`should fail on big image`, async () => {
+      const spy = jest
+        .spyOn(axios, 'post')
+        .mockImplementation(() => ({ data: {} }))
+
+      await request(server)
+        .post('/api/v1/images')
+        .attach('image', `${__dirname}/adobestock.png`)
+        .expect(413)
+        .then(res => {
+          expect(res.body.error).toContain('Payload Too Large')
+        })
+
+      spy.mockClear()
+    })
+  })
+
   afterAll(async () => {
     await app.close()
   })
