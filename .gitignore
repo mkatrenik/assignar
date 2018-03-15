@@ -17,3 +17,5 @@ npm-debug.log
 # dist
 /server/dist
 /client/dist
+/server/coverage
+/client/coverage
