@@ -5,7 +5,8 @@
   },
   "testMatch": ["**/__tests__/**/*.(spec|test).ts?(x)"],
   "collectCoverageFrom": [
-    "server/src/**/*.{js,jsx,tsx,ts}",
+    "src/**/*.{js,jsx,tsx,ts}",
+    "!src/typings/**",
     "!**/node_modules/**",
     "!**/vendor/**"
   ],
