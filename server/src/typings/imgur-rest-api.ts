@@ -4,14 +4,14 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 /* tslint:disable */
-declare namespace ImgurRestApi {
-  interface Response<T> {
+export namespace ImgurRestApi {
+  export interface Response<T> {
     data: T
     status: number
     success: boolean
   }
 
-  interface Account {
+  export interface Account {
     id: number
     url: string
     bio: string
@@ -20,7 +20,7 @@ declare namespace ImgurRestApi {
     pro_expiration: any //number|boolean;
   }
 
-  interface AccountSettings {
+  export interface AccountSettings {
     email: string
     high_quality: boolean
     public_images: boolean
@@ -32,7 +32,7 @@ declare namespace ImgurRestApi {
     blocked_users: Array<BlockedUser>
   }
 
-  interface Album {
+  export interface Album {
     id: string
     title: string
     description: string
@@ -55,12 +55,12 @@ declare namespace ImgurRestApi {
     images: Array<Image>
   }
 
-  interface BlockedUser {
+  export interface BlockedUser {
     blocked_id: number
     blocked_url: string
   }
 
-  interface Comment {
+  export interface Comment {
     id: number
     image_id: string
     comment: string
@@ -78,7 +78,7 @@ declare namespace ImgurRestApi {
     children: Array<Comment>
   }
 
-  interface Conversation {
+  export interface Conversation {
     id: number
     last_message_preview: string
     datetime: number
@@ -90,7 +90,7 @@ declare namespace ImgurRestApi {
     page?: number
   }
 
-  interface CustomGallery {
+  export interface CustomGallery {
     account_url: string
     link: string
     tags: Array<string>
@@ -98,7 +98,7 @@ declare namespace ImgurRestApi {
     items: Array<GalleryItem>
   }
 
-  interface GalleryItem {
+  export interface GalleryItem {
     id: string
     title: string
     description: string
@@ -119,7 +119,7 @@ declare namespace ImgurRestApi {
     topic_id: number
   }
 
-  interface GalleryAlbum extends GalleryItem {
+  export interface GalleryAlbum extends GalleryItem {
     cover: string
     cover_width: number
     cover_height: number
@@ -129,7 +129,7 @@ declare namespace ImgurRestApi {
     images: Array<Image>
   }
 
-  interface GalleryImage extends GalleryItem {
+  export interface GalleryImage extends GalleryItem {
     type: string
     animated: boolean
     width: number
@@ -144,14 +144,14 @@ declare namespace ImgurRestApi {
     section: string
   }
 
-  interface GalleryProfile {
+  export interface GalleryProfile {
     total_gallery_comments: number
     total_gallery_favorites: number
     total_gallery_submissions: number
     trophies: Array<Trophy>
   }
 
-  interface Trophy {
+  export interface Trophy {
     id: number
     name: string
     name_clean: string
@@ -162,7 +162,7 @@ declare namespace ImgurRestApi {
     image: string
   }
 
-  interface Image {
+  export interface Image {
     id: string
     title: string
     description: string
@@ -189,14 +189,14 @@ declare namespace ImgurRestApi {
     account_id?: number
   }
 
-  interface MemeMetadata {
+  export interface MemeMetadata {
     meme_name: string
     top_text: string
     bottom_text: string
     bg_image: string
   }
 
-  interface Message {
+  export interface Message {
     id: number
     from: string
     account_id: number
@@ -206,19 +206,19 @@ declare namespace ImgurRestApi {
     datetime: number
   }
 
-  interface Notification<T> {
+  export interface Notification<T> {
     id: number
     account_id: number
     viewed: boolean
     content: T
   }
 
-  interface AccountNotifications {
+  export interface AccountNotifications {
     replies: Array<Notification<Comment>>
     messages: Array<Notification<Conversation>>
   }
 
-  interface Tag {
+  export interface Tag {
     name: string
     followers: number
     total_items: number
@@ -226,25 +226,25 @@ declare namespace ImgurRestApi {
     items: Array<GalleryItem>
   }
 
-  interface TagVote {
+  export interface TagVote {
     ups: number
     downs: number
     name: string
     author: string
   }
 
-  interface Topic {
+  export interface Topic {
     id: number
     name: string
     description: string
   }
 
-  interface Vote {
+  export interface Vote {
     ups: number
     downs: number
   }
 
-  interface Error {
+  export interface Error {
     error: string
     request: string
     method: string
