@@ -1,4 +1,4 @@
-import { IsString, IsInt, IsEnum, IsPositive } from 'class-validator'
+import { IsString, IsInt, IsEnum } from 'class-validator'
 import { Type } from 'class-transformer'
 
 enum Sort {
@@ -20,8 +20,7 @@ export class GetGalleryOptions {
 
   @Type(() => Number)
   @IsInt()
-  @IsPositive()
-  page: number
+  page: number = 0
 
   @IsEnum(Window) window: Window = Window.week
 }
