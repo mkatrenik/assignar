@@ -19,3 +19,4 @@ npm-debug.log
 /client/dist
 /server/coverage
 /client/coverage
+.cache

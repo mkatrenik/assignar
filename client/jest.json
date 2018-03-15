@@ -1,0 +1,20 @@
+{
+  "moduleFileExtensions": ["ts", "tsx", "js"],
+  "transform": {
+    "\\.(ts|tsx)$": "<rootDir>/../node_modules/ts-jest/preprocessor.js"
+  },
+  "testRegex": "/client/src/.*\\.spec\\.(ts|tsx|js)$",
+  "globals": {
+    "ts-jest": {
+      "tsConfigFile": "./tsconfig.json"
+    }
+  },
+  "collectCoverageFrom": [
+    "src/**/*.{js,jsx,tsx,ts}",
+    "!src/typings/**",
+    "!**/node_modules/**",
+    "!**/vendor/**"
+  ],
+  "coverageReporters": ["json", "lcov"],
+  "setupFiles": ["./src/jestinit.js"]
+}
