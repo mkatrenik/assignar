@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run server:tsc:watch",
-    "test": "npm run server:test",
+    "start": "npm run server:tsc:watch & npm run client:bundler:watch",
+    "test": "npm run server:test && npm run client:test",
     "server:test": "jest --config=./server/jest.json",
     "server:test:coverage": "jest --config=./server/jest.json --coverage --coverageDirectory=coverage",
     "server:test:watch": "jest --watch --config=./server/jest.json",
-    "server:tsc:watch": "tsc-watch --outDir ./server/dist  --onSuccess \"node ./server/dist/index.js\" -p ./server/tsconfig.json"
+    "server:tsc:watch": "tsc-watch --outDir ./server/dist  --onSuccess \"node ./server/dist/index.js\" -p ./server/tsconfig.json",
+    "client:bundler:watch": "parcel -d client/dist client/src/index.html",
+    "client:test:watch": "jest --watch --config=./client/jest.json",
+    "client:test": "jest --config=./client/jest.json"
   },
   "keywords": [],
   "author": "",
