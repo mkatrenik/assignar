@@ -1,12 +1,12 @@
 import { IsString, IsInt, IsEnum } from 'class-validator'
 import { Type } from 'class-transformer'
 
-enum Sort {
+export enum Sort {
   time = 'time',
   top = 'top'
 }
 
-enum Window {
+export enum Window {
   day = 'day',
   week = 'week',
   month = 'month',
@@ -15,12 +15,12 @@ enum Window {
 }
 
 export class GetGalleryOptions {
-  @IsString() subreddit: string
-  @IsEnum(Sort) sort: Sort = Sort.time
+  @IsString() subreddit?: string
+  @IsEnum(Sort) sort?: Sort = Sort.time
 
   @Type(() => Number)
   @IsInt()
-  page: number = 0
+  page?: number = 0
 
-  @IsEnum(Window) window: Window = Window.week
+  @IsEnum(Window) window?: Window = Window.week
 }
