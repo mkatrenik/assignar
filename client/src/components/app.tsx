@@ -1,3 +1,11 @@
 import * as React from 'react'
+import { Gallery } from './gallery'
+import { injectGlobal } from 'styled-components'
 
-export const App = () => <div>fooo</div>
+injectGlobal`
+  body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+`
+
+export const App = () => <Gallery />
