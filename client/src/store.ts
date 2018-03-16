@@ -15,4 +15,11 @@ export class State {
   }
 }
 
-export const appState = ((window as any).appState = store(new State()))
+let appState = store(new State())
+;(window as any).appState = appState
+
+export function resetAppState(state: State = new State()) {
+  appState = store(state)
+}
+
+export { appState }
