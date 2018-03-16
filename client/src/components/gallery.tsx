@@ -28,8 +28,12 @@ export class Gallery extends React.Component {
     super(props)
   }
 
-  componentDidMount() {
+  fetch() {
     appState.fetch({ subreddit: appState.imgurImageSourceValue })
+  }
+
+  async componentDidMount() {
+    this.fetch()
   }
 
   render() {
@@ -37,8 +41,8 @@ export class Gallery extends React.Component {
       <Styled>
         <form
           onSubmit={ev => {
+            this.fetch()
             ev.preventDefault()
-            appState.fetch({ subreddit: appState.imgurImageSourceValue })
           }}
         >
           <div className="grid">
@@ -46,10 +50,9 @@ export class Gallery extends React.Component {
               <select
                 value={appState.imgurImageSourceType}
                 className="select"
-                onChange={ev =>
-                  (appState.imgurImageSourceType = ev.currentTarget
-                    .value as any)
-                }
+                onChange={ev => {
+                  appState.imgurImageSourceType = ev.currentTarget.value as any
+                }}
               >
                 <option value={ImgurImageSource.subreddit}>Subreddit</option>
                 <option value={ImgurImageSource.album}>Album</option>
