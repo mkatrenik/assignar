@@ -16,5 +16,6 @@
     "!**/vendor/**"
   ],
   "coverageReporters": ["json", "lcov"],
-  "setupFiles": ["./src/jestinit.js"]
+  "setupFiles": ["./src/jestinit.js"],
+  "snapshotSerializers": ["enzyme-to-json/serializer"]
 }
