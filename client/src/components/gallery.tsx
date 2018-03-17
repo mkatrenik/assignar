@@ -3,6 +3,8 @@ import { view } from 'react-easy-state'
 import { appState } from '../store'
 import styled from 'styled-components'
 import { ImgurImageSource } from '../interfaces'
+import { ModalCmp } from './modal'
+import { GalleryItemLocal } from '../models'
 
 const Styled = styled.div`
   img {
@@ -18,22 +20,30 @@ const Styled = styled.div`
   }
 `
 
-function resized(path: string) {
-  return path.replace(/.jpg$/, 'm.jpg')
-}
-
 @view
 export class Gallery extends React.Component {
-  constructor(props: any) {
-    super(props)
-  }
-
   fetch() {
     appState.fetch({ subreddit: appState.imgurImageSourceValue })
   }
 
   async componentDidMount() {
     this.fetch()
+  }
+
+  handleFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = ev.currentTarget.files
+
+    if (!fileList) return
+    if (fileList.length === 0) return
+
+    const file = fileList[0]
+
+    const reader = new FileReader()
+    reader.onload = evv => {
+      const dataUrl = (evv.currentTarget as any).result
+      appState.imagesLocal.push(new GalleryItemLocal(dataUrl))
+    }
+    reader.readAsDataURL(file)
   }
 
   render() {
@@ -55,7 +65,7 @@ export class Gallery extends React.Component {
                 }}
               >
                 <option value={ImgurImageSource.subreddit}>Subreddit</option>
-                <option value={ImgurImageSource.album}>Album</option>
+                <option value={ImgurImageSource.album}>Imgur album</option>
               </select>
             </div>
             <div className="col-2">
@@ -73,16 +83,58 @@ export class Gallery extends React.Component {
                 }
               />
             </div>
-            <div className="col">
+            <div className="col-1">
               <button type="submit">fetch</button>
+            </div>
+            <div className="col">
+              Or upload your own{' '}
+              <input
+                type="file"
+                name="image"
+                onChange={this.handleFileChange}
+                accept="image/*"
+              />
             </div>
           </div>
         </form>
-        <div className="grid">
-          {appState.images.map(i => (
-            <img key={i.id} className="col-2" src={resized(i.link)} />
-          ))}
+        <div>
+          {appState.imagesLocal.length > 0 && (
+            <>
+              <h2>Local images</h2>
+              <div className="grid">
+                {appState.imagesLocal.slice(0, 12).map(i => (
+                  <img
+                    key={i.id}
+                    onClick={() => {
+                      appState.onImageClick(i)
+                    }}
+                    className="col-2"
+                    src={i.link}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
+        <div>
+          <h2>Imgur images</h2>
+          <div className="grid">
+            {appState.images
+              .filter(i => i.link.match(/jpg$/))
+              .slice(0, 12)
+              .map(i => (
+                <img
+                  key={i.id}
+                  onClick={() => {
+                    appState.onImageClick(i)
+                  }}
+                  className="col-2"
+                  src={i.link}
+                />
+              ))}
+          </div>
+        </div>
+        {appState.modalIsOpen && <ModalCmp />}
       </Styled>
     )
   }

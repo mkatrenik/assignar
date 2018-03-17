@@ -24,7 +24,7 @@ exports[`<Gallery /> should show data 1`] = `
           <option
             value="album"
           >
-            Album
+            Imgur album
           </option>
         </select>
       </div>
@@ -40,7 +40,7 @@ exports[`<Gallery /> should show data 1`] = `
         />
       </div>
       <div
-        className="col"
+        className="col-1"
       >
         <button
           type="submit"
@@ -48,66 +48,95 @@ exports[`<Gallery /> should show data 1`] = `
           fetch
         </button>
       </div>
+      <div
+        className="col"
+      >
+        Or upload your own
+         
+        <input
+          accept="image/*"
+          name="image"
+          onChange={[Function]}
+          type="file"
+        />
+      </div>
     </div>
   </form>
-  <div
-    className="grid"
-  >
-    <img
-      className="col-2"
-      key="TKQPXk2"
-      src="https://i.imgur.com/TKQPXk2m.jpg"
-    />
-    <img
-      className="col-2"
-      key="q2uohuJ"
-      src="https://i.imgur.com/q2uohuJm.jpg"
-    />
-    <img
-      className="col-2"
-      key="pprl8Dk"
-      src="https://i.imgur.com/pprl8Dkm.jpg"
-    />
-    <img
-      className="col-2"
-      key="KMebpmj"
-      src="https://i.imgur.com/KMebpmjm.jpg"
-    />
-    <img
-      className="col-2"
-      key="0XeEmtO"
-      src="https://i.imgur.com/0XeEmtOm.jpg"
-    />
-    <img
-      className="col-2"
-      key="N170Iao"
-      src="https://i.imgur.com/N170Iaom.jpg"
-    />
-    <img
-      className="col-2"
-      key="iCtomjC"
-      src="https://i.imgur.com/iCtomjCm.jpg"
-    />
-    <img
-      className="col-2"
-      key="a4G2gFu"
-      src="https://i.imgur.com/a4G2gFum.jpg"
-    />
-    <img
-      className="col-2"
-      key="dyln4by"
-      src="https://i.imgur.com/dyln4bym.jpg"
-    />
-    <img
-      className="col-2"
-      key="DUZVPZV"
-      src="https://i.imgur.com/DUZVPZVm.jpg"
-    />
-    <img
-      className="col-2"
-      key="ECzq95K"
-      src="https://i.imgur.com/ECzq95Km.jpg"
-    />
+  <div />
+  <div>
+    <h2>
+      Imgur images
+    </h2>
+    <div
+      className="grid"
+    >
+      <img
+        className="col-2"
+        key="TKQPXk2"
+        onClick={[Function]}
+        src="https://i.imgur.com/TKQPXk2.jpg"
+      />
+      <img
+        className="col-2"
+        key="q2uohuJ"
+        onClick={[Function]}
+        src="https://i.imgur.com/q2uohuJ.jpg"
+      />
+      <img
+        className="col-2"
+        key="pprl8Dk"
+        onClick={[Function]}
+        src="https://i.imgur.com/pprl8Dk.jpg"
+      />
+      <img
+        className="col-2"
+        key="KMebpmj"
+        onClick={[Function]}
+        src="https://i.imgur.com/KMebpmj.jpg"
+      />
+      <img
+        className="col-2"
+        key="0XeEmtO"
+        onClick={[Function]}
+        src="https://i.imgur.com/0XeEmtO.jpg"
+      />
+      <img
+        className="col-2"
+        key="N170Iao"
+        onClick={[Function]}
+        src="https://i.imgur.com/N170Iao.jpg"
+      />
+      <img
+        className="col-2"
+        key="iCtomjC"
+        onClick={[Function]}
+        src="https://i.imgur.com/iCtomjC.jpg"
+      />
+      <img
+        className="col-2"
+        key="a4G2gFu"
+        onClick={[Function]}
+        src="https://i.imgur.com/a4G2gFu.jpg"
+      />
+      <img
+        className="col-2"
+        key="dyln4by"
+        onClick={[Function]}
+        src="https://i.imgur.com/dyln4by.jpg"
+      />
+      <img
+        className="col-2"
+        key="DUZVPZV"
+        onClick={[Function]}
+        src="https://i.imgur.com/DUZVPZV.jpg"
+      />
+      <img
+        className="col-2"
+        key="ECzq95K"
+        onClick={[Function]}
+        src="https://i.imgur.com/ECzq95K.jpg"
+      />
+    </div>
   </div>
 </styled.div>
 `;

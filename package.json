@@ -29,6 +29,8 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-easy-state": "^5.0.0",
+    "react-mosaic": "0.0.20",
+    "react-responsive-modal": "^2.0.1",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^5.5.7",
     "styled-components": "^3.2.3"
@@ -50,6 +52,7 @@
     "jest": "^22.4.2",
     "parcel-bundler": "^1.6.2",
     "supertest": "^3.0.0",
+    "threads": "^0.10.1",
     "ts-jest": "^22.4.1",
     "tsc-watch": "^1.0.17",
     "tslint": "^5.9.1",

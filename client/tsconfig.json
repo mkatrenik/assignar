@@ -2,10 +2,11 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
+    "target": "es5",
     "sourceMap": true,
     "declaration": true,
     "jsx": "react",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2017", "es2015", "es2016", "dom"],
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
