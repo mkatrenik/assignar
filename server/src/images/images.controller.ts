@@ -22,7 +22,7 @@ export class ImagesController {
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 20000 } }))
+  @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 200000 } }))
   async upload(
     @UploadedFile() file: Express.Multer.File,
     @Body() payload: CreateImagePayload
