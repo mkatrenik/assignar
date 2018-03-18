@@ -42,21 +42,18 @@ export class GalleryItemLocal extends GalleryItem {
   dataUrl: string
 
   constructor(item: TDataUrl) {
-    super(
-      Math.random()
-        .toString(36)
-        .replace(/[^a-z]+/g, '')
-        .substr(0, 6)
-    )
+    super(GalleryItemLocal.generateId())
     this.dataUrl = item
+  }
+
+  static generateId() {
+    return Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, '')
+      .substr(0, 6)
   }
 
   get link() {
     return this.dataUrl
   }
 }
-
-// interface Item {
-//   dataUrl: TDataUrl
-//   getSize(): TImageSize
-// }
