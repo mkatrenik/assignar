@@ -17,6 +17,11 @@ export const urlToDataURL = (url: string) =>
         })
     )
 
+/**
+ * convert svg element to image
+ * @param svg
+ * @param fileType
+ */
 export const svgToImageAsDataUrl = (
   svg: SVGSVGElement,
   fileType: 'png' | 'jpeg' = 'jpeg'
@@ -48,6 +53,10 @@ export const svgToImageAsDataUrl = (
   })
 }
 
+/**
+ * get image dimansions
+ * @param image
+ */
 export const getImageSize = (image: TDataUrl) => {
   return new Promise<TImageSize>(resolve => {
     let img = new Image()
@@ -60,9 +69,17 @@ export const getImageSize = (image: TDataUrl) => {
   })
 }
 
+/**
+ * convert DataUrl to Blob
+ * @param dataUrl
+ */
 export const dataUrlToBlob = (dataUrl: TDataUrl) =>
   fetch(dataUrl).then(res => res.blob())
 
+/**
+ * timeout as promise
+ * @param time
+ */
 export const timeout = (time: number) => {
   return new Promise(ok => {
     setTimeout(() => {
