@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { ImgurImageSource } from '../interfaces'
 import { ModalCmp } from './modal'
 import { GalleryItemLocal } from '../models'
+import { fileReaderPromised } from '../utils'
 
 const Styled = styled.div`
   img {
@@ -22,6 +23,11 @@ const Styled = styled.div`
 
 @view
 export class Gallery extends React.Component {
+  constructor(props: any) {
+    super(props)
+    this.handleFileChange = this.handleFileChange.bind(this)
+  }
+
   fetch() {
     appState.fetch({ subreddit: appState.imgurImageSourceValue })
   }
@@ -30,20 +36,15 @@ export class Gallery extends React.Component {
     this.fetch()
   }
 
-  handleFileChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+  async handleFileChange(ev: React.ChangeEvent<HTMLInputElement>) {
     const fileList = ev.currentTarget.files
 
     if (!fileList) return
     if (fileList.length === 0) return
 
-    const file = fileList[0]
+    const dataUrl = await fileReaderPromised(fileList[0])
 
-    const reader = new FileReader()
-    reader.onload = evv => {
-      const dataUrl = (evv.currentTarget as any).result
-      appState.imagesLocal.push(new GalleryItemLocal(dataUrl))
-    }
-    reader.readAsDataURL(file)
+    appState.imagesLocal.push(new GalleryItemLocal(dataUrl))
   }
 
   render() {
@@ -76,7 +77,7 @@ export class Gallery extends React.Component {
                 placeholder={
                   appState.imgurImageSourceType === ImgurImageSource.subreddit
                     ? 'Subreddit name (e.g. EarthPorn)'
-                    : 'Album id or deleteHash'
+                    : 'Album id'
                 }
                 onChange={ev =>
                   (appState.imgurImageSourceValue = ev.currentTarget.value)
@@ -97,7 +98,7 @@ export class Gallery extends React.Component {
             </div>
           </div>
         </form>
-        <div>
+        <div className="local-images">
           {appState.imagesLocal.length > 0 && (
             <>
               <h2>Local images</h2>
@@ -108,7 +109,7 @@ export class Gallery extends React.Component {
                     onClick={() => {
                       appState.onImageClick(i)
                     }}
-                    className="col-2"
+                    className="col-2 image"
                     src={i.link}
                   />
                 ))}
@@ -116,7 +117,7 @@ export class Gallery extends React.Component {
             </>
           )}
         </div>
-        <div>
+        <div className="imgur-images">
           <h2>Imgur images</h2>
           <div className="grid">
             {appState.images
@@ -128,7 +129,7 @@ export class Gallery extends React.Component {
                   onClick={() => {
                     appState.onImageClick(i)
                   }}
-                  className="col-2"
+                  className="col-2 image"
                   src={i.link}
                 />
               ))}
