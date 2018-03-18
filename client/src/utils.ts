@@ -70,3 +70,18 @@ export const timeout = (time: number) => {
     }, time)
   })
 }
+
+/**
+ * read Blob as DataUrl
+ * @param file
+ */
+export const fileReaderPromised = (file: File) => {
+  return new Promise<TDataUrl>(resolve => {
+    const reader = new FileReader()
+    reader.onload = evv => {
+      const dataUrl = (evv.currentTarget as any).result as TDataUrl
+      resolve(dataUrl)
+    }
+    reader.readAsDataURL(file)
+  })
+}
