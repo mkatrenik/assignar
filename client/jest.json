@@ -11,7 +11,7 @@
   },
   "collectCoverageFrom": [
     "src/**/*.{js,jsx,tsx,ts}",
-    "!src/typings/**",
+    "!src/typings.d.ts",
     "!**/node_modules/**",
     "!**/vendor/**"
   ],
