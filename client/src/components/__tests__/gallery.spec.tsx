@@ -23,9 +23,7 @@ describe('<Gallery />', () => {
   })
 
   it('should call fetch on didmount', async () => {
-    const spy = jest
-      .spyOn(Gallery.prototype, 'fetch')
-      .mockImplementation(() => null)
+    const spy = jest.spyOn(appState, 'fetch').mockImplementation(() => null)
 
     shallow(<Gallery />)
     expect(spy.mock.calls.length).toBe(1)
@@ -34,9 +32,7 @@ describe('<Gallery />', () => {
   it('should fetch on submit', async () => {
     const wrapper = shallow(<Gallery />, { disableLifecycleMethods: true })
 
-    const spy = jest
-      .spyOn(Gallery.prototype, 'fetch')
-      .mockImplementation(() => null)
+    const spy = jest.spyOn(appState, 'fetch').mockImplementation(() => null)
 
     wrapper
       .find('select')

@@ -34,15 +34,16 @@ exports[`<Gallery /> should show data 1`] = `
         <input
           className="name"
           onChange={[Function]}
-          placeholder="Subreddit name (e.g. EarthPorn)"
+          placeholder="Subreddit name (e.g. EarthPorn or aww)"
           type="text"
-          value=""
+          value="EarthPorn"
         />
       </div>
       <div
         className="col-1"
       >
         <button
+          disabled={false}
           type="submit"
         >
           fetch
@@ -69,8 +70,30 @@ exports[`<Gallery /> should show data 1`] = `
     className="imgur-images"
   >
     <h2>
-      Imgur images
+      Imgur images from 
+      EarthPorn
     </h2>
+    Page: 
+    0
+     
+    <button
+      onClick={[Function]}
+    >
+      prev
+    </button>
+     
+    <button
+      onClick={[Function]}
+    >
+      next
+    </button>
+    <div
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+    />
     <div
       className="grid"
     >
@@ -179,15 +202,16 @@ exports[`<Gallery /> should show local images on file upload 1`] = `
         <input
           className="name"
           onChange={[Function]}
-          placeholder="Subreddit name (e.g. EarthPorn)"
+          placeholder="Subreddit name (e.g. EarthPorn or aww)"
           type="text"
-          value=""
+          value="EarthPorn"
         />
       </div>
       <div
         className="col-1"
       >
         <button
+          disabled={false}
           type="submit"
         >
           fetch
@@ -230,8 +254,30 @@ exports[`<Gallery /> should show local images on file upload 1`] = `
     className="imgur-images"
   >
     <h2>
-      Imgur images
+      Imgur images from 
+      EarthPorn
     </h2>
+    Page: 
+    0
+     
+    <button
+      onClick={[Function]}
+    >
+      prev
+    </button>
+     
+    <button
+      onClick={[Function]}
+    >
+      next
+    </button>
+    <div
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+    />
     <div
       className="grid"
     />
@@ -273,15 +319,16 @@ exports[`<Gallery /> should show local images on file upload 2`] = `
         <input
           className="name"
           onChange={[Function]}
-          placeholder="Subreddit name (e.g. EarthPorn)"
+          placeholder="Subreddit name (e.g. EarthPorn or aww)"
           type="text"
-          value=""
+          value="EarthPorn"
         />
       </div>
       <div
         className="col-1"
       >
         <button
+          disabled={false}
           type="submit"
         >
           fetch
@@ -324,8 +371,30 @@ exports[`<Gallery /> should show local images on file upload 2`] = `
     className="imgur-images"
   >
     <h2>
-      Imgur images
+      Imgur images from 
+      EarthPorn
     </h2>
+    Page: 
+    0
+     
+    <button
+      onClick={[Function]}
+    >
+      prev
+    </button>
+     
+    <button
+      onClick={[Function]}
+    >
+      next
+    </button>
+    <div
+      style={
+        Object {
+          "marginBottom": 10,
+        }
+      }
+    />
     <div
       className="grid"
     />
