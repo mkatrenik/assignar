@@ -9,9 +9,9 @@ import * as jsImgGen from 'js-image-generator'
 
 const mockResponse = require('../images/__tests__/gallery-subreddit-mock')
 
-const generateImage = () => {
+const generateImage = (width: number, height: number, quality = 80) => {
   return new Promise<Buffer>((resolve, reject) => {
-    jsImgGen.generateImage(800, 600, 80, (err, image) => {
+    jsImgGen.generateImage(width, height, quality, (err, image) => {
       if (err) return reject(err)
       resolve(image.data)
     })
@@ -77,9 +77,11 @@ describe('Images', () => {
         .spyOn(axios, 'post')
         .mockImplementation(() => ({ data: {} }))
 
+      const img = await generateImage(10, 10)
+
       await request(server)
         .post('/api/v1/images')
-        .attach('image', `${__dirname}/fotolia.jpg`)
+        .attach('image', img, `fotolia.jpg`)
         .expect(201)
 
       spy.mockClear()
@@ -90,7 +92,7 @@ describe('Images', () => {
         .spyOn(axios, 'post')
         .mockImplementation(() => ({ data: {} }))
 
-      const img = await generateImage()
+      const img = await generateImage(800, 600)
 
       await request(server)
         .post('/api/v1/images')
