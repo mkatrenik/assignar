@@ -7,6 +7,21 @@ management library used in app, relies on it.
 
 App was not tested on Windows, but hopefully, docker will work...
 
+![homepage](https://raw.githubusercontent.com/mkatrenik/assignar/master/assets/hp.png)
+![mosaic](https://raw.githubusercontent.com/mkatrenik/assignar/master/assets/mosaic.png)
+
+## Chalanges
+
+* imgur's gallery endpoint returns mix of images & albums and no items count, which makes proper pagination imposible
+* inability to filter imgur responses by file type (except search)
+
+## Improvements
+
+* more tests, docs
+* remove secrets from code
+* better UI
+* better error propagation from imgur to frontend
+
 ## Usage
 
 You have 2 options:
