@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Mosaic from 'react-mosaic'
 import { view } from 'react-easy-state'
-import { GalleryItem } from '../models'
 import { appState } from '../store'
 import { TileRenderer } from '../interfaces'
 
@@ -18,14 +17,12 @@ function halfToneRenderer(props: any) {
   )
 }
 
-export interface IProps {
-  image: GalleryItem
-}
-
 @view
-export class MakeMosaic extends React.Component<IProps> {
+export class MakeMosaic extends React.Component {
   render() {
-    let { dataUrl, size } = this.props.image
+    if (!appState.selectedImage) return null
+
+    let { dataUrl, size } = appState.selectedImage
 
     // This is hack, due to bug in react-mosaic, they render on
     // componentWillReceiveProps, which is not called first time

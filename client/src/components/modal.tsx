@@ -9,9 +9,12 @@ import { TileRenderer } from '../interfaces'
 export class ModalCmp extends React.Component {
   box: HTMLDivElement | null = null
 
+  /**
+   * grab svg element and call upload
+   */
   onUploadBtnClick = async () => {
     if (this.box) {
-      // get svg elem from mosaic component, becouse there is no api for
+      // get svg elem from mosaic component, because there is no api for
       // getting back rendered svg
       const svg = this.box.querySelector('svg')
 
@@ -56,7 +59,7 @@ export class ModalCmp extends React.Component {
             {appState.loading && <div>LOADING...</div>}
             {appState.selectedImage && (
               <>
-                <MakeMosaic image={appState.selectedImage} />
+                <MakeMosaic />
                 {appState.loading === false && (
                   <div>
                     <button onClick={this.onUploadBtnClick}>Upload</button>
