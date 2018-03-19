@@ -1,4 +1,10 @@
-import { IsString, IsInt, IsEnum } from 'class-validator'
+import {
+  IsString,
+  IsInt,
+  IsEnum,
+  IsOptional,
+  ValidateIf
+} from 'class-validator'
 import { Type } from 'class-transformer'
 
 export enum Sort {
@@ -15,7 +21,14 @@ export enum Window {
 }
 
 export class GetGalleryOptions {
-  @IsString() subreddit?: string
+  @ValidateIf(o => !o.albumId)
+  @IsString()
+  subreddit?: string
+
+  @ValidateIf(o => !o.subreddit)
+  @IsString()
+  albumId?: string
+
   @IsEnum(Sort) sort?: Sort = Sort.time
 
   @Type(() => Number)

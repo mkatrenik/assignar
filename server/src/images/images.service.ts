@@ -19,11 +19,17 @@ export class ImageService {
     subreddit,
     sort,
     page,
-    window
+    window,
+    albumId
   }: GetGalleryOptions) {
-    const resp = await this.apiClient.get<TGalleryResponse>(
-      `/gallery/r/${subreddit}/${sort}/${window}/${page}`
-    )
+    let url = ''
+    if (subreddit) {
+      url = `/gallery/r/${subreddit}/${sort}/${window}/${page}`
+    } else {
+      url = `/album/${albumId}/images`
+    }
+
+    const resp = await this.apiClient.get<TGalleryResponse>(url)
 
     return resp.data.data
   }

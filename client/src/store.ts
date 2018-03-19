@@ -8,15 +8,30 @@ import { dataUrlToBlob, svgToImageAsDataUrl } from './utils'
 export class State {
   images: GalleryItemImgur[] = []
   imagesLocal: GalleryItemLocal[] = []
+  imagesCurrentPage = 0
   imgurImageSourceType = ImgurImageSource.subreddit
-  imgurImageSourceValue = ''
+  imgurImageSourceValue = 'EarthPorn'
   selectedImage?: GalleryItem
   modalIsOpen = false
   loading = false
   newLink: string = ''
   currentTileRenderer = TileRenderer.circleRenderer
 
-  async fetch(opts: GetGalleryOptions) {
+  async fetch() {
+    let opts: GetGalleryOptions
+
+    if (this.imgurImageSourceType === ImgurImageSource.subreddit) {
+      opts = {
+        subreddit: this.imgurImageSourceValue,
+        page: this.imagesCurrentPage
+      }
+    } else {
+      opts = {
+        page: this.imagesCurrentPage,
+        albumId: this.imgurImageSourceValue
+      }
+    }
+
     const data = await getGallery(opts)
     this.images = data.map(i => new GalleryItemImgur(i))
   }
@@ -43,6 +58,16 @@ export class State {
     await this.selectedImage.setDataUrl()
     await this.selectedImage.setImageSize()
     this.loading = false
+  }
+
+  setImagesCurrentPage(count: 1 | -1) {
+    if (count === -1) {
+      if (this.imagesCurrentPage !== 0) {
+        this.imagesCurrentPage -= 1
+      }
+    } else {
+      this.imagesCurrentPage += 1
+    }
   }
 }
 

@@ -28,12 +28,8 @@ export class Gallery extends React.Component {
     this.handleFileChange = this.handleFileChange.bind(this)
   }
 
-  fetch() {
-    appState.fetch({ subreddit: appState.imgurImageSourceValue })
-  }
-
   async componentDidMount() {
-    this.fetch()
+    appState.fetch()
   }
 
   async handleFileChange(ev: React.ChangeEvent<HTMLInputElement>) {
@@ -52,7 +48,8 @@ export class Gallery extends React.Component {
       <Styled>
         <form
           onSubmit={ev => {
-            this.fetch()
+            appState.imagesCurrentPage = 0
+            appState.fetch()
             ev.preventDefault()
           }}
         >
@@ -62,6 +59,7 @@ export class Gallery extends React.Component {
                 value={appState.imgurImageSourceType}
                 className="select"
                 onChange={ev => {
+                  appState.imgurImageSourceValue = ''
                   appState.imgurImageSourceType = ev.currentTarget.value as any
                 }}
               >
@@ -76,8 +74,8 @@ export class Gallery extends React.Component {
                 value={appState.imgurImageSourceValue}
                 placeholder={
                   appState.imgurImageSourceType === ImgurImageSource.subreddit
-                    ? 'Subreddit name (e.g. EarthPorn)'
-                    : 'Album id'
+                    ? 'Subreddit name (e.g. EarthPorn or aww)'
+                    : 'Album id (uploads album is K5Ror)'
                 }
                 onChange={ev =>
                   (appState.imgurImageSourceValue = ev.currentTarget.value)
@@ -85,7 +83,12 @@ export class Gallery extends React.Component {
               />
             </div>
             <div className="col-1">
-              <button type="submit">fetch</button>
+              <button
+                type="submit"
+                disabled={appState.imgurImageSourceValue === ''}
+              >
+                fetch
+              </button>
             </div>
             <div className="col">
               Or upload your own{' '}
@@ -118,21 +121,36 @@ export class Gallery extends React.Component {
           )}
         </div>
         <div className="imgur-images">
-          <h2>Imgur images</h2>
+          <h2>Imgur images from {appState.imgurImageSourceValue}</h2>
+          Page: {appState.imagesCurrentPage}{' '}
+          <button
+            onClick={_ => {
+              appState.setImagesCurrentPage(-1)
+              appState.fetch()
+            }}
+          >
+            prev
+          </button>{' '}
+          <button
+            onClick={_ => {
+              appState.setImagesCurrentPage(1)
+              appState.fetch()
+            }}
+          >
+            next
+          </button>
+          <div style={{ marginBottom: 10 }} />
           <div className="grid">
-            {appState.images
-              .filter(i => i.link.match(/jpg$/))
-              .slice(0, 12)
-              .map(i => (
-                <img
-                  key={i.id}
-                  onClick={() => {
-                    appState.onImageClick(i)
-                  }}
-                  className="col-2 image"
-                  src={i.link}
-                />
-              ))}
+            {appState.images.filter(i => i.link.match(/jpg$/)).map(i => (
+              <img
+                key={i.id}
+                onClick={() => {
+                  appState.onImageClick(i)
+                }}
+                className="col-2 image"
+                src={i.link}
+              />
+            ))}
           </div>
         </div>
         {appState.modalIsOpen && <ModalCmp />}
