@@ -4,8 +4,19 @@ import { Test } from '@nestjs/testing'
 import { ImagesModule } from '../images/images.module'
 import { INestApplication, ValidationPipe } from '@nestjs/common'
 import axios from 'axios'
+import * as fs from 'fs'
+import * as jsImgGen from 'js-image-generator'
 
 const mockResponse = require('../images/__tests__/gallery-subreddit-mock')
+
+const generateImage = () => {
+  return new Promise<Buffer>((resolve, reject) => {
+    jsImgGen.generateImage(800, 600, 80, (err, image) => {
+      if (err) return reject(err)
+      resolve(image.data)
+    })
+  })
+}
 
 describe('Images', () => {
   let server
@@ -79,9 +90,11 @@ describe('Images', () => {
         .spyOn(axios, 'post')
         .mockImplementation(() => ({ data: {} }))
 
+      const img = await generateImage()
+
       await request(server)
         .post('/api/v1/images')
-        .attach('image', `${__dirname}/adobestock.png`)
+        .attach('image', img, 'foo.jpeg')
         .expect(413)
         .then(res => {
           expect(res.body.error).toContain('Payload Too Large')
