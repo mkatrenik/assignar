@@ -16,11 +16,17 @@ import { CreateImagePayload } from './dto/create-image-payload'
 export class ImagesController {
   constructor(private readonly imageService: ImageService) {}
 
+  /**
+   * fetch images
+   */
   @Get()
   async root(@Query() options: GetGalleryOptions) {
     return this.imageService.fetchSubredditGallery(options)
   }
 
+  /**
+   * upload file
+   */
   @Post()
   @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 200000 } }))
   async upload(

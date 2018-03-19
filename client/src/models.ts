@@ -4,13 +4,29 @@ import { TImageSize, TDataUrl } from './interfaces'
 
 export abstract class GalleryItem {
   readonly id: string
+
+  /**
+   * DataUrl representation of image
+   */
   dataUrl?: TDataUrl
+
+  /**
+   * struct representing image dimensions
+   */
   size?: TImageSize
+
+  /**
+   * link - either url or dataurl
+   */
+  link?: string
 
   constructor(id: string) {
     this.id = id
   }
 
+  /**
+   * computes image dimensions
+   */
   async setImageSize() {
     if (!this.dataUrl) {
       throw new Error(`this.dataUrl not set`)
@@ -18,6 +34,9 @@ export abstract class GalleryItem {
     this.size = await getImageSize(this.dataUrl)
   }
 
+  /**
+   * convert image from link to dataUrl
+   */
   async setDataUrl() {}
 }
 
@@ -46,6 +65,9 @@ export class GalleryItemLocal extends GalleryItem {
     this.dataUrl = item
   }
 
+  /**
+   * generate fake id for local images
+   */
   static generateId() {
     return Math.random()
       .toString(36)

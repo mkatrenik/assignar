@@ -32,6 +32,9 @@ export class Gallery extends React.Component {
     appState.fetch()
   }
 
+  /**
+   * insert uploaded file to app's state as GalleryItemLocal
+   */
   async handleFileChange(ev: React.ChangeEvent<HTMLInputElement>) {
     const fileList = ev.currentTarget.files
 

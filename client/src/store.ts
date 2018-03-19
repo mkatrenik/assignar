@@ -17,6 +17,9 @@ export class State {
   newLink: string = ''
   currentTileRenderer = TileRenderer.circleRenderer
 
+  /**
+   * fetch images, based on state
+   */
   async fetch() {
     let opts: GetGalleryOptions
 
@@ -36,6 +39,9 @@ export class State {
     this.images = data.map(i => new GalleryItemImgur(i))
   }
 
+  /**
+   * convert svg to image and upload
+   */
   async upload(svg: SVGSVGElement) {
     this.loading = true
     const dataUrl = await svgToImageAsDataUrl(svg)
@@ -51,6 +57,9 @@ export class State {
     this.loading = false
   }
 
+  /**
+   * show image in modal with mosaic effect
+   */
   async onImageClick(image: GalleryItem) {
     this.loading = true
     this.modalIsOpen = true
@@ -60,6 +69,9 @@ export class State {
     this.loading = false
   }
 
+  /**
+   * set current page in paging
+   */
   setImagesCurrentPage(count: 1 | -1) {
     if (count === -1) {
       if (this.imagesCurrentPage !== 0) {
@@ -71,11 +83,13 @@ export class State {
   }
 }
 
+// store singleton
 let appState = store(new State())
 
 // for debugging in console
 ;(window as any).appState = appState
 
+// reset store (for testing)
 export function resetAppState(state: State = new State()) {
   appState = store(state)
 }

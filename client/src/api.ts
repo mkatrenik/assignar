@@ -7,15 +7,19 @@ import { CreateImagePayload } from '../../server/src/images/dto/create-image-pay
 
 axios.defaults.baseURL = 'http://localhost:3000'
 
+/**
+ * get images from gallery or album
+ */
 export async function getGallery(options: GetGalleryOptions) {
-  // console.log(options)
-  // return (mock as any) as ImgurRestApi.GalleryItem[]
   const res = await axios.get<ImgurRestApi.GalleryImage[]>('/api/v1/images', {
     params: options
   })
   return res.data
 }
 
+/**
+ * upload image
+ */
 export async function upload(image: Blob, args: CreateImagePayload) {
   const form = new FormData()
   form.set('image', image)

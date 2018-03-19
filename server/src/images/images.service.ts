@@ -15,6 +15,9 @@ export class ImageService {
     @Inject('ImgurDefaultAlbumDeleteHash') private readonly album: string
   ) {}
 
+  /**
+   * return subreddit gallery, or album images as array
+   */
   async fetchSubredditGallery({
     subreddit,
     sort,
@@ -34,6 +37,9 @@ export class ImageService {
     return resp.data.data
   }
 
+  /**
+   * upload image to imgur's album
+   */
   async uploadImage(args: TUploadPayloadArgs) {
     const { buffer, ...options } = args
     const resp = await this.apiClient.post<TImageUploadResponse>(`/image`, {
