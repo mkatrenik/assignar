@@ -9,4 +9,7 @@ services:
   
   test:
     build: .
+    volumes:
+      - $PWD/server:/usr/src/app/server
+      - $PWD/client:/usr/src/app/client
     command: npm test
