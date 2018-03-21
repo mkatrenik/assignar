@@ -1,4 +1,4 @@
-import { UploadImgurImageBody } from '../dto/uploadImgurImagebody'
+import { UploadImgurImageBody } from '../dto/uploadImgurImageBody'
 import { ImgurRestApi } from '../../typings/imgur-rest-api'
 
 export type TGalleryResponse = ImgurRestApi.Response<ImgurRestApi.GalleryItem[]>

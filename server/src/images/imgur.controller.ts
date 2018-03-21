@@ -11,7 +11,7 @@ import {
 import { ImgurService } from './imgur.service'
 import { ImagesService } from './images.service'
 import { GetImgurImagesSerchParams } from './dto/getImgurImagesSearchParams'
-import { UploadImgurImageBody } from './dto/uploadImgurImagebody'
+import { UploadImgurImageBody } from './dto/uploadImgurImageBody'
 import * as jsImgGen from 'js-image-generator'
 
 @Controller('/api/v1/imgur')
