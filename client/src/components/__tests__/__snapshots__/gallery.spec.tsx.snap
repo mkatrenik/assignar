@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Gallery /> should show data 1`] = `
+exports[`<Gallery /> should show imgur images 1`] = `
 <styled.div>
   <form
     onSubmit={[Function]}
@@ -74,7 +74,7 @@ exports[`<Gallery /> should show data 1`] = `
       EarthPorn
     </h2>
     Page: 
-    0
+    1
      
     <button
       onClick={[Function]}
@@ -168,7 +168,7 @@ exports[`<Gallery /> should show data 1`] = `
 </styled.div>
 `;
 
-exports[`<Gallery /> should show local images on file upload 1`] = `
+exports[`<Gallery /> should show local images 1`] = `
 <styled.div>
   <form
     onSubmit={[Function]}
@@ -238,14 +238,18 @@ exports[`<Gallery /> should show local images on file upload 1`] = `
       <h2>
         Local images
       </h2>
+      <Paginate
+        perPage={5}
+        total={0}
+      />
       <div
-        className="grid"
+        className="grid-5"
       >
         <img
-          className="col-2 image"
-          key="foo"
+          className="col image"
+          key="1"
           onClick={[Function]}
-          src="base64"
+          src="http://localhost:3000foo"
         />
       </div>
     </React.Fragment>
@@ -258,124 +262,7 @@ exports[`<Gallery /> should show local images on file upload 1`] = `
       EarthPorn
     </h2>
     Page: 
-    0
-     
-    <button
-      onClick={[Function]}
-    >
-      prev
-    </button>
-     
-    <button
-      onClick={[Function]}
-    >
-      next
-    </button>
-    <div
-      style={
-        Object {
-          "marginBottom": 10,
-        }
-      }
-    />
-    <div
-      className="grid"
-    />
-  </div>
-</styled.div>
-`;
-
-exports[`<Gallery /> should show local images on file upload 2`] = `
-<styled.div>
-  <form
-    onSubmit={[Function]}
-  >
-    <div
-      className="grid"
-    >
-      <div
-        className="col-1"
-      >
-        <select
-          className="select"
-          onChange={[Function]}
-          value="subreddit"
-        >
-          <option
-            value="subreddit"
-          >
-            Subreddit
-          </option>
-          <option
-            value="album"
-          >
-            Imgur album
-          </option>
-        </select>
-      </div>
-      <div
-        className="col-2"
-      >
-        <input
-          className="name"
-          onChange={[Function]}
-          placeholder="Subreddit name (e.g. EarthPorn or aww)"
-          type="text"
-          value="EarthPorn"
-        />
-      </div>
-      <div
-        className="col-1"
-      >
-        <button
-          disabled={false}
-          type="submit"
-        >
-          fetch
-        </button>
-      </div>
-      <div
-        className="col"
-      >
-        Or upload your own
-         
-        <input
-          accept="image/*"
-          name="image"
-          onChange={[Function]}
-          type="file"
-        />
-      </div>
-    </div>
-  </form>
-  <div
-    className="local-images"
-  >
-    <React.Fragment>
-      <h2>
-        Local images
-      </h2>
-      <div
-        className="grid"
-      >
-        <img
-          className="col-2 image"
-          key="foo"
-          onClick={[Function]}
-          src="base64"
-        />
-      </div>
-    </React.Fragment>
-  </div>
-  <div
-    className="imgur-images"
-  >
-    <h2>
-      Imgur images from 
-      EarthPorn
-    </h2>
-    Page: 
-    0
+    1
      
     <button
       onClick={[Function]}

@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { shallow, mount, render } from 'enzyme'
+import { shallow } from 'enzyme'
 import { Gallery } from '../gallery'
 import { resetAppState, appState } from '../../store'
 import * as api from '../../api'
 import { mock } from '../../__mocks__/getGallery'
 import { ImgurImageSource } from '../../interfaces'
-import { GalleryItemLocal } from '../../models'
+import { GalleryItemTmp, GalleryItemLocal } from '../../models'
 import { ModalCmp } from '../modal'
 
 describe('<Gallery />', () => {
@@ -15,24 +15,28 @@ describe('<Gallery />', () => {
 
   afterEach(() => jest.clearAllMocks())
 
-  it('should show data', async () => {
+  it('should show imgur images', async () => {
     appState.images = mock as any
 
     const wrapper = shallow(<Gallery />, { disableLifecycleMethods: true })
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('should call fetch on didmount', async () => {
-    const spy = jest.spyOn(appState, 'fetch').mockImplementation(() => null)
+  it('should call getImgurImages on didmount', async () => {
+    const spy = jest
+      .spyOn(appState, 'getImgurImages')
+      .mockImplementation(() => null)
 
     shallow(<Gallery />)
     expect(spy.mock.calls.length).toBe(1)
   })
 
-  it('should fetch on submit', async () => {
+  it('should call getImgurImages on submit', async () => {
     const wrapper = shallow(<Gallery />, { disableLifecycleMethods: true })
 
-    const spy = jest.spyOn(appState, 'fetch').mockImplementation(() => null)
+    const spy = jest
+      .spyOn(appState, 'getImgurImages')
+      .mockImplementation(() => null)
 
     wrapper
       .find('select')
@@ -58,28 +62,32 @@ describe('<Gallery />', () => {
       }
     }
     await (wrapper.instance() as Gallery).handleFileChange(fakeEvent)
-    expect(appState.imagesLocal.length).toBe(1)
-    expect(appState.imagesLocal[0]).toBeInstanceOf(GalleryItemLocal)
+    expect(appState.selectedImage).toBeInstanceOf(GalleryItemTmp)
   })
 
-  it('should show local images on file upload', async () => {
-    jest.spyOn(GalleryItemLocal, 'generateId').mockReturnValue('foo')
-    appState.imagesLocal.push(new GalleryItemLocal('base64'))
+  it('should show local images', async () => {
+    appState.imagesLocal.push(
+      new GalleryItemLocal({ id: 1, link: 'foo', title: 'asda' })
+    )
     const wrapper = shallow(<Gallery />, { disableLifecycleMethods: true })
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('should show local images on file upload', async () => {
-    jest.spyOn(GalleryItemLocal, 'generateId').mockReturnValue('foo')
-    appState.imagesLocal.push(new GalleryItemLocal('base64'))
-    const wrapper = shallow(<Gallery />, { disableLifecycleMethods: true })
-    expect(wrapper).toMatchSnapshot()
+  it('should call getLocalImages on didmount', async () => {
+    const spy = jest
+      .spyOn(appState, 'getLocalImages')
+      .mockImplementation(() => null)
+
+    shallow(<Gallery />)
+    expect(spy.mock.calls.length).toBe(1)
   })
 
-  it('should call appStore.onImageClick on image click', async () => {
+  it('should call appState.onImageClick on image click', async () => {
+    appState.imagesLocal.push(
+      new GalleryItemLocal({ id: 1, link: 'foo', title: 'asda' })
+    )
+    const wrapper = shallow(<Gallery />, { disableLifecycleMethods: true })
     const spy = jest.spyOn(appState, 'onImageClick').mockReturnValue('foo')
-    appState.imagesLocal.push(new GalleryItemLocal('base64'))
-    const wrapper = shallow(<Gallery />, { disableLifecycleMethods: true })
 
     wrapper
       .find('.local-images .image')

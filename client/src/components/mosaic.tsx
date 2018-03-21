@@ -38,7 +38,9 @@ export class MakeMosaic extends React.Component {
 
     return (
       <div>
+        {!appState.showMosaic && <img src={dataUrl} />}
         <Mosaic
+          style={{ display: appState.showMosaic ? 'block' : 'none' }}
           src={dataUrl}
           tileSize={12}
           width={size.width}

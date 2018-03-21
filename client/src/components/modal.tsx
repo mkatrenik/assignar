@@ -12,18 +12,25 @@ export class ModalCmp extends React.Component {
   /**
    * grab svg element and call upload
    */
-  onUploadBtnClick = async () => {
+  uploadToImgur = async () => {
     if (this.box) {
       // get svg elem from mosaic component, because there is no api for
       // getting back rendered svg
       const svg = this.box.querySelector('svg')
 
       if (svg) {
-        await appState.upload(svg)
+        await appState.uploadToImgur(svg)
       } else {
         console.error(`Couldn't find svg!`)
       }
     }
+  }
+
+  /**
+   * grab svg element and call upload
+   */
+  uploadToServer = async () => {
+    await appState.uploadToServer()
   }
 
   render() {
@@ -39,7 +46,12 @@ export class ModalCmp extends React.Component {
         >
           <div
             ref={box => (this.box = box)}
-            style={{ marginTop: 30, minWidth: 100 }}
+            style={{
+              marginTop: 30,
+              minWidth: 100,
+              overflow: 'scroll',
+              maxHeight: 400
+            }}
           >
             <select
               style={{ marginBottom: 10 }}
@@ -56,13 +68,36 @@ export class ModalCmp extends React.Component {
                 {TileRenderer.halfToneRenderer}
               </option>
             </select>
+            <button onClick={_ => appState.toggle()}>
+              toggle {appState.showMosaic ? 'image' : 'mosaic'}
+            </button>{' '}
+            (btw you can scroll here :-))
             {appState.loading && <div>LOADING...</div>}
             {appState.selectedImage && (
               <>
                 <MakeMosaic />
                 {appState.loading === false && (
                   <div>
-                    <button onClick={this.onUploadBtnClick}>Upload</button>
+                    <input
+                      type="text"
+                      placeholder="title"
+                      value={appState.imageTitle}
+                      onChange={ev => {
+                        appState.imageTitle = ev.currentTarget.value
+                      }}
+                    />
+                    <button
+                      onClick={this.uploadToImgur}
+                      disabled={!appState.imageTitle}
+                    >
+                      Upload to imgur
+                    </button>
+                    <button
+                      onClick={this.uploadToServer}
+                      disabled={!appState.imageTitle}
+                    >
+                      Upload to server
+                    </button>
                   </div>
                 )}
                 {appState.newLink !== '' && (

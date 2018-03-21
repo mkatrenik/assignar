@@ -1,6 +1,8 @@
 import { ImgurRestApi } from '../../server/src/typings/imgur-rest-api'
 import { urlToDataURL, getImageSize } from './utils'
 import { TImageSize, TDataUrl } from './interfaces'
+import { API_URL } from './api'
+import { IImagesResponse } from '../../server/src/images/interfaces/api'
 
 export abstract class GalleryItem {
   readonly id: string
@@ -57,11 +59,11 @@ export class GalleryItemImgur extends GalleryItem {
   }
 }
 
-export class GalleryItemLocal extends GalleryItem {
+export class GalleryItemTmp extends GalleryItem {
   dataUrl: string
 
   constructor(item: TDataUrl) {
-    super(GalleryItemLocal.generateId())
+    super(GalleryItemTmp.generateId())
     this.dataUrl = item
   }
 
@@ -77,5 +79,18 @@ export class GalleryItemLocal extends GalleryItem {
 
   get link() {
     return this.dataUrl
+  }
+}
+
+export class GalleryItemLocal extends GalleryItem {
+  readonly link: string
+
+  constructor(item: IImagesResponse) {
+    super(String(item.id))
+    this.link = `${API_URL}${item.link}`
+  }
+
+  async setDataUrl() {
+    this.dataUrl = await urlToDataURL(this.link)
   }
 }

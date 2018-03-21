@@ -4,7 +4,7 @@ import { appState } from '../store'
 import styled from 'styled-components'
 import { ImgurImageSource } from '../interfaces'
 import { ModalCmp } from './modal'
-import { GalleryItemLocal } from '../models'
+import { GalleryItemTmp } from '../models'
 import { fileReaderPromised } from '../utils'
 
 const Styled = styled.div`
@@ -21,6 +21,33 @@ const Styled = styled.div`
   }
 `
 
+const StyledPaginate = styled.div`
+  .active {
+    text-decoration: none;
+  }
+`
+
+const Paginate = ({ total, perPage }: { total: number; perPage: number }) => {
+  const numPages = Math.ceil(total / perPage)
+  const pages = []
+  for (let i = 1; i <= numPages; i++) {
+    pages.push(
+      <button
+        onClick={_ => {
+          appState.imagesLocalOffset = perPage * i - perPage
+          appState.imagesCurrentPage = i
+          appState.getLocalImages()
+        }}
+        key={i}
+        disabled={appState.imagesCurrentPage === i ? true : false}
+      >
+        {i}{' '}
+      </button>
+    )
+  }
+  return <StyledPaginate>{pages}</StyledPaginate>
+}
+
 @view
 export class Gallery extends React.Component {
   constructor(props: any) {
@@ -29,7 +56,8 @@ export class Gallery extends React.Component {
   }
 
   async componentDidMount() {
-    appState.fetch()
+    appState.getImgurImages()
+    appState.getLocalImages()
   }
 
   /**
@@ -43,7 +71,7 @@ export class Gallery extends React.Component {
 
     const dataUrl = await fileReaderPromised(fileList[0])
 
-    appState.imagesLocal.push(new GalleryItemLocal(dataUrl))
+    appState.onImageClick(new GalleryItemTmp(dataUrl))
   }
 
   render() {
@@ -52,7 +80,7 @@ export class Gallery extends React.Component {
         <form
           onSubmit={ev => {
             appState.imagesCurrentPage = 0
-            appState.fetch()
+            appState.getImgurImages()
             ev.preventDefault()
           }}
         >
@@ -108,14 +136,15 @@ export class Gallery extends React.Component {
           {appState.imagesLocal.length > 0 && (
             <>
               <h2>Local images</h2>
-              <div className="grid">
-                {appState.imagesLocal.slice(0, 12).map(i => (
+              <Paginate total={appState.imagesLocalCount} perPage={5} />
+              <div className="grid-5">
+                {appState.imagesLocal.map(i => (
                   <img
                     key={i.id}
                     onClick={() => {
                       appState.onImageClick(i)
                     }}
-                    className="col-2 image"
+                    className="col image"
                     src={i.link}
                   />
                 ))}
@@ -129,7 +158,7 @@ export class Gallery extends React.Component {
           <button
             onClick={_ => {
               appState.setImagesCurrentPage(-1)
-              appState.fetch()
+              appState.getImgurImages()
             }}
           >
             prev
@@ -137,7 +166,7 @@ export class Gallery extends React.Component {
           <button
             onClick={_ => {
               appState.setImagesCurrentPage(1)
-              appState.fetch()
+              appState.getImgurImages()
             }}
           >
             next

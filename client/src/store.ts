@@ -1,14 +1,27 @@
 import { store } from 'react-easy-state'
-import { getGallery, upload } from './api'
-import { GetGalleryOptions } from '../../server/src/images/dto/get-gallery-options'
+import {
+  getImgurImages,
+  uploadToImgur,
+  getLocalImages,
+  uploadToServer
+} from './api'
+import { GetImgurImagesSerchParams } from '../../server/src/images/dto/getImgurImagesSearchParams'
 import { ImgurImageSource, TileRenderer } from './interfaces'
-import { GalleryItemImgur, GalleryItemLocal, GalleryItem } from './models'
+import {
+  GalleryItemImgur,
+  GalleryItemTmp,
+  GalleryItem,
+  GalleryItemLocal
+} from './models'
 import { dataUrlToBlob, svgToImageAsDataUrl } from './utils'
 
 export class State {
   images: GalleryItemImgur[] = []
+  imagesTmp: GalleryItemTmp[] = []
   imagesLocal: GalleryItemLocal[] = []
-  imagesCurrentPage = 0
+  imagesLocalOffset = 1
+  imagesLocalCount = 0
+  imagesCurrentPage = 1
   imgurImageSourceType = ImgurImageSource.subreddit
   imgurImageSourceValue = 'EarthPorn'
   selectedImage?: GalleryItem
@@ -16,12 +29,17 @@ export class State {
   loading = false
   newLink: string = ''
   currentTileRenderer = TileRenderer.circleRenderer
+  imageTitle = ''
+  showMosaic = false
+  toggle() {
+    this.showMosaic = !this.showMosaic
+  }
 
   /**
    * fetch images, based on state
    */
-  async fetch() {
-    let opts: GetGalleryOptions
+  async getImgurImages() {
+    let opts: GetImgurImagesSerchParams
 
     if (this.imgurImageSourceType === ImgurImageSource.subreddit) {
       opts = {
@@ -35,26 +53,49 @@ export class State {
       }
     }
 
-    const data = await getGallery(opts)
+    const data = await getImgurImages(opts)
     this.images = data.map(i => new GalleryItemImgur(i))
+  }
+
+  /**
+   * fetch images stored on local server
+   */
+  async getLocalImages() {
+    const { data, count } = await getLocalImages(this.imagesLocalOffset, 5)
+    this.imagesLocalCount = count
+    this.imagesLocal = data.map(i => new GalleryItemLocal(i))
   }
 
   /**
    * convert svg to image and upload
    */
-  async upload(svg: SVGSVGElement) {
+  async uploadToImgur(svg: SVGSVGElement) {
     this.loading = true
     const dataUrl = await svgToImageAsDataUrl(svg)
 
     const blob = await dataUrlToBlob(dataUrl)
 
-    const data = await upload(blob, {
-      title: 'foo',
-      name: 'foo',
-      description: ''
+    const data = await uploadToImgur(blob, {
+      title: this.imageTitle
     })
     this.newLink = data.link
     this.loading = false
+  }
+
+  /**
+   * upload to local server
+   */
+  async uploadToServer() {
+    this.loading = true
+    if (this.selectedImage && this.selectedImage.dataUrl) {
+      const blob = await dataUrlToBlob(this.selectedImage.dataUrl)
+
+      const data = await uploadToServer(blob, { title: this.imageTitle })
+      this.newLink = data.link
+    }
+    this.modalIsOpen = false
+    this.loading = false
+    this.getLocalImages()
   }
 
   /**
