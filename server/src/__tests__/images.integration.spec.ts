@@ -95,7 +95,7 @@ describe('Imgur', () => {
         .spyOn(axios, 'post')
         .mockImplementation(() => ({ data: {} }))
 
-      const img = await generateImage(800, 600)
+      const img = await generateImage(1200, 1200)
 
       await request(server)
         .post('/api/v1/imgur')

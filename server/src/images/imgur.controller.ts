@@ -30,7 +30,7 @@ export class ImgurImagesController {
    * upload file
    */
   @Post()
-  @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 200000 } }))
+  @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 1000000 } }))
   async upload(
     @UploadedFile() file: Express.Multer.File,
     @Body() payload: UploadImgurImageBody
