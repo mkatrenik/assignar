@@ -4,6 +4,7 @@ This app works with imgur API, displaying images from either subreddit gallery, 
 
 App requires following prerequisites:
 
+* node.js (I used version 9.2)
 * Browser support for [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy), since state management library used in app, relies on it.
 * sqlite installed on server. (App creates /tmp/assignar.dev.db && /tmp/assignar.test.db)
 
@@ -31,7 +32,7 @@ You have 2 options:
 1.  Run in docker
 
 ```bash
-docker-compose run app
+docker-compose up app
 ```
 
 2.  Run locally

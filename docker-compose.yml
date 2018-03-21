@@ -5,6 +5,9 @@ services:
     ports:
       - 3000:3000
       - 1234:1234
+    volumes:
+      - $PWD/server:/usr/src/app/server
+      - $PWD/client:/usr/src/app/client
     command: npm start
   
   test:
