@@ -17,8 +17,8 @@ import { ImageEntity } from './image.entity'
           ? '/tmp/assignar.test.db'
           : '/tmp/assignar.dev.db',
       entities: [ImageEntity],
-      synchronize: true
-      // dropSchema: true
+      synchronize: true,
+      dropSchema: process.env.NODE_ENV === 'test'
     }),
     TypeOrmModule.forFeature([ImageEntity])
   ],

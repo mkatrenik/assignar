@@ -35,7 +35,7 @@ describe('ImgurController', () => {
     imgurService = module.get<ImgurService>(ImgurService)
   })
 
-  describe('root', () => {
+  describe('get', () => {
     it('should return an array of images', async () => {
       const result = galleryMockResponse.data
       const options = new GetImgurImagesSerchParams()

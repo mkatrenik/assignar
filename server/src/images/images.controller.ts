@@ -11,7 +11,6 @@ import {
   Response
 } from '@nestjs/common'
 import { ImagesService } from './images.service'
-import { GetImgurImagesSerchParams } from './dto/getImgurImagesSearchParams'
 import * as jsImgGen from 'js-image-generator'
 import { UploadLocalImageBody } from './dto/uploadLocalImageBody'
 import { ImageEntity } from './image.entity'
