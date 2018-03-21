@@ -30,7 +30,7 @@ export class ModalCmp extends React.Component {
    * grab svg element and call upload
    */
   uploadToServer = async () => {
-    await appState.uploadToServer()
+    appState.uploadToServer()
   }
 
   render() {

@@ -19,7 +19,7 @@ export class State {
   images: GalleryItemImgur[] = []
   imagesTmp: GalleryItemTmp[] = []
   imagesLocal: GalleryItemLocal[] = []
-  imagesLocalOffset = 1
+  imagesLocalOffset = 0
   imagesLocalCount = 0
   imagesCurrentPage = 1
   imgurImageSourceType = ImgurImageSource.subreddit
@@ -91,10 +91,12 @@ export class State {
       const blob = await dataUrlToBlob(this.selectedImage.dataUrl)
 
       const data = await uploadToServer(blob, { title: this.imageTitle })
+      this.imageTitle = ''
       this.newLink = data.link
     }
-    this.modalIsOpen = false
+
     this.loading = false
+    this.modalIsOpen = false
     this.getLocalImages()
   }
 
