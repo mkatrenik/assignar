@@ -18,7 +18,7 @@ const generateImage = (width: number, height: number, quality = 80) => {
   })
 }
 
-describe('Images', () => {
+describe('Imgur', () => {
   let server
   let app: INestApplication
 
@@ -33,16 +33,18 @@ describe('Images', () => {
     await app.init()
   })
 
-  describe(`GET /api/v1/images`, () => {
+  describe(`GET /api/v1/imgur`, () => {
     it(`should work`, async () => {
       const spy = jest
         .spyOn(axios, 'get')
         .mockImplementation(() => ({ data: mockResponse }))
 
       await request(server)
-        .get('/api/v1/images?subreddit=aww')
+        .get('/api/v1/imgur?subreddit=aww')
         .expect(200)
         .then(res => {
+          // console.log(res)
+
           expect(Array.isArray(res.body)).toEqual(true)
           expect(res.body.length).toBe(4)
         })
@@ -56,22 +58,22 @@ describe('Images', () => {
         .mockImplementation(() => ({ data: mockResponse }))
 
       await request(server)
-        .get('/api/v1/images?sort=aaa')
+        .get('/api/v1/imgur?sort=aaa')
         .expect(400)
 
       await request(server)
-        .get('/api/v1/images?')
+        .get('/api/v1/imgur?')
         .expect(400)
 
       await request(server)
-        .get('/api/v1/images?subreddit=aww&window=foo')
+        .get('/api/v1/imgur?subreddit=aww&window=foo')
         .expect(400)
 
       spy.mockClear()
     })
   })
 
-  describe(`POST /api/v1/images`, () => {
+  describe(`POST /api/v1/imgur`, () => {
     it(`should upload image`, async () => {
       const spy = jest
         .spyOn(axios, 'post')
@@ -80,8 +82,9 @@ describe('Images', () => {
       const img = await generateImage(10, 10)
 
       await request(server)
-        .post('/api/v1/images')
+        .post('/api/v1/imgur')
         .attach('image', img, `fotolia.jpg`)
+        .field('title', 'foo')
         .expect(201)
 
       spy.mockClear()
@@ -95,7 +98,7 @@ describe('Images', () => {
       const img = await generateImage(800, 600)
 
       await request(server)
-        .post('/api/v1/images')
+        .post('/api/v1/imgur')
         .attach('image', img, 'foo.jpeg')
         .expect(413)
         .then(res => {

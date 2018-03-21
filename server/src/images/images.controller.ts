@@ -6,33 +6,74 @@ import {
   Post,
   UseInterceptors,
   FileInterceptor,
-  UploadedFile
+  UploadedFile,
+  Param,
+  Response
 } from '@nestjs/common'
-import { ImageService } from './images.service'
-import { GetGalleryOptions } from './dto/get-gallery-options'
-import { CreateImagePayload } from './dto/create-image-payload'
+import { ImagesService } from './images.service'
+import { GetImgurImagesSerchParams } from './dto/getImgurImagesSearchParams'
+import * as jsImgGen from 'js-image-generator'
+import { UploadLocalImageBody } from './dto/uploadLocalImageBody'
+import { ImageEntity } from './image.entity'
+import { IImagesResponse } from './interfaces/api'
+import { GetLocalImagesSerchParams } from './dto/getLocalImagesSearchParams'
+
+const generateImage = (width: number, height: number, quality = 80) => {
+  return new Promise<Buffer>((resolve, reject) => {
+    jsImgGen.generateImage(width, height, quality, (err, image) => {
+      if (err) return reject(err)
+      resolve(image.data)
+    })
+  })
+}
 
 @Controller('/api/v1/images')
-export class ImagesController {
-  constructor(private readonly imageService: ImageService) {}
+export class LocalImagesController {
+  constructor(private readonly imageService: ImagesService) {}
 
   /**
-   * fetch images
+   * get list of images stored on server
    */
   @Get()
-  async root(@Query() options: GetGalleryOptions) {
-    return this.imageService.fetchSubredditGallery(options)
+  async getImages(
+    @Query() searchParams: GetLocalImagesSerchParams
+  ): Promise<{ data: IImagesResponse[]; count: number }> {
+    const [images, count] = await this.imageService.getLocalImages(
+      searchParams.offset,
+      searchParams.limit
+    )
+    const data = images.map(i => ({
+      id: i.id,
+      title: i.title,
+      link: `/api/v1/images/${i.id}`
+    }))
+    return { data, count }
   }
 
   /**
-   * upload file
+   * get image stored in db
+   */
+  @Get(':id')
+  async getImage(@Param('id') id, @Response() res) {
+    const image = await this.imageService.getLocalImage(Number(id))
+    res.set('Content-Type', image.mimetype)
+    res.send(image.image)
+  }
+
+  /**
+   * upload file & save to db
    */
   @Post()
   @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 200000 } }))
-  async upload(
+  async saveImage(
     @UploadedFile() file: Express.Multer.File,
-    @Body() payload: CreateImagePayload
+    @Body() payload: UploadLocalImageBody
   ) {
-    return this.imageService.uploadImage({ buffer: file.buffer, ...payload })
+    const image = new ImageEntity()
+    image.mimetype = file.mimetype
+    image.image = file.buffer
+    image.title = payload.title
+
+    return this.imageService.saveLocalImage(image)
   }
 }

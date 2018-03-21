@@ -21,6 +21,7 @@
     "@nestjs/common": "^4.6.6",
     "@nestjs/core": "^4.6.6",
     "@nestjs/testing": "^4.6.6",
+    "@nestjs/typeorm": "^2.0.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "class-transformer": "^0.1.9",
@@ -33,7 +34,9 @@
     "react-responsive-modal": "^2.0.1",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^5.5.7",
-    "styled-components": "^3.2.3"
+    "sqlite3": "^4.0.0",
+    "styled-components": "^3.2.3",
+    "typeorm": "^0.1.16"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.41",

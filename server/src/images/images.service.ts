@@ -5,49 +5,30 @@ import {
   TImageUploadResponse,
   TUploadPayloadArgs
 } from './interfaces/api'
-import { GetGalleryOptions } from './dto/get-gallery-options'
-import { CreateImagePayload } from './dto/create-image-payload'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { ImageEntity } from './image.entity'
 
 @Component()
-export class ImageService {
+export class ImagesService {
   constructor(
-    @Inject('ImgurRestApiClient') private readonly apiClient: AxiosStatic,
-    @Inject('ImgurDefaultAlbumDeleteHash') private readonly album: string
+    @InjectRepository(ImageEntity)
+    private readonly imageRepository: Repository<ImageEntity>
   ) {}
 
-  /**
-   * return subreddit gallery, or album images as array
-   */
-  async fetchSubredditGallery({
-    subreddit,
-    sort,
-    page,
-    window,
-    albumId
-  }: GetGalleryOptions) {
-    let url = ''
-    if (subreddit) {
-      url = `/gallery/r/${subreddit}/${sort}/${window}/${page}`
-    } else {
-      url = `/album/${albumId}/images`
-    }
-
-    const resp = await this.apiClient.get<TGalleryResponse>(url)
-
-    return resp.data.data
+  async getLocalImages(offset: number, limit: number) {
+    return await this.imageRepository.findAndCount({
+      select: ['id', 'mimetype', 'title'],
+      skip: offset,
+      take: limit
+    })
   }
 
-  /**
-   * upload image to imgur's album
-   */
-  async uploadImage(args: TUploadPayloadArgs) {
-    const { buffer, ...options } = args
-    const resp = await this.apiClient.post<TImageUploadResponse>(`/image`, {
-      image: buffer.toString('base64'),
-      type: 'base64',
-      album: this.album,
-      ...options
-    })
-    return resp.data.data
+  async getLocalImage(id: number) {
+    return await this.imageRepository.findOneById(id)
+  }
+
+  async saveLocalImage(entity: ImageEntity) {
+    return await this.imageRepository.insert(entity)
   }
 }

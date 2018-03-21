@@ -1,10 +1,4 @@
-import {
-  IsString,
-  IsInt,
-  IsEnum,
-  IsOptional,
-  ValidateIf
-} from 'class-validator'
+import { IsString, IsInt, IsEnum, ValidateIf } from 'class-validator'
 import { Type } from 'class-transformer'
 
 export enum Sort {
@@ -20,7 +14,7 @@ export enum Window {
   all = 'all'
 }
 
-export class GetGalleryOptions {
+export class GetImgurImagesSerchParams {
   @ValidateIf(o => !o.albumId)
   @IsString()
   subreddit?: string
