@@ -1,6 +1,6 @@
 # Assignar demo
 
-This app works with imgur API, displaying images from either subreddit gallery, or concrete album, or uploaded from computer. Then, clicking on image, it shows it with mosaic effect applied and with ability to upload them to default imgur album with id `K5Ror`. (You can see all uploaded images in default album by selecting Imgur album in top left select and typing K5Ror to input)
+This app works with imgur API, displaying images from either subreddit gallery, or concrete album, or uploaded from computer. Then, clicking on image, it shows it with mosaic effect applied and with ability to upload them to default imgur [album](https://imgur.com/a/K5Ror). (You can see all uploaded images in default album by selecting Imgur album in top left select and typing K5Ror to input)
 
 App requires following prerequisites:
 
